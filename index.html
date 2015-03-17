@@ -33,7 +33,7 @@
 		}
 
 		function getWayID(e) {
-			var surfaceUrl = "https://api.tiles.mapbox.com/v4/surface/planemad.0fab1118.json?layer=unconnected_major&fields=node_id&access_token=pk.eyJ1IjoicGxhbmVtYWQiLCJhIjoiemdYSVVLRSJ9.g3lbg_eN0kztmsfIPxa9MQ&points=" + e.latlng.lng + "," + e.latlng.lat;
+			var surfaceUrl = "https://api.tiles.mapbox.com/v4/surface/planemad.0fab1118.json?layer=unconnected_major&fields=node_id&interpolate=false&access_token=pk.eyJ1IjoicGxhbmVtYWQiLCJhIjoiemdYSVVLRSJ9.g3lbg_eN0kztmsfIPxa9MQ&points=" + e.latlng.lng + "," + e.latlng.lat;
 
 			$.ajax({
 				async: false,
