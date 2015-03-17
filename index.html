@@ -48,7 +48,7 @@
 		// Open the selected feature in JOSM using a faux AJAX call
 		function openInJosm(way_id) {
 			if (way_id) {
-				var JOSMurl = "http://127.0.0.1:8111/load_object?new_layer=true&objects=w" + way_id;
+				var JOSMurl = "http://127.0.0.1:8111/load_object?new_layer=true&objects=n" + way_id;
 			} else {
 				var JOSMurl = getJOSMUrl();
 			}
