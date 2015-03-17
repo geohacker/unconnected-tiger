@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
+	<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
+
+	<title>Unconnected Major - TIGER</title>
+
+	<style>
+		body { margin:0; padding:0; }
+		#map { position:absolute; top:0; bottom:0; width:100%; }
+	</style>
+</head>
+
+<body>
+	<div id='map'></div>
+	<script>
+		L.mapbox.accessToken = 'pk.eyJ1IjoicGxhbmVtYWQiLCJhIjoiemdYSVVLRSJ9.g3lbg_eN0kztmsfIPxa9MQ';
+		var map = L.mapbox.map('map', 'planemad.c2f80b8f')
+		.setView([40, -74.50], 9);
+
+		map.on('click', function(e) {
+			openInJosm();
+		});
+
+		function getJOSMUrl() {
+			var bounds = map.getBounds();
+			var sw = bounds.getSouthWest();
+			var ne = bounds.getNorthEast();
+			return "http://127.0.0.1:8111/load_and_zoom?new_layer=true&left=" + sw.lng + "&right=" + ne.lng + "&top=" + ne.lat + "&bottom=" + sw.lat
+		}
+
+		// Open the selected feature in JOSM using a faux AJAX call
+		function openInJosm() {
+			var JOSMurl = getJOSMUrl();
+			// Use the .ajax JQ method to load the JOSM link unobtrusively and alert when the JOSM plugin is not running.
+			$.ajax({
+				url: JOSMurl,
+				complete: function(t) {
+					if (t.status!=200) alert("JOSM remote control did not respond (" + t.status + "). Do you have JOSM running?");
+				}
+			})
+		};
+
+	</script>
+</body>
+</html>
+
