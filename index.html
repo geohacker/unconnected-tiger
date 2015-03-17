@@ -22,19 +22,36 @@
 		.setView([40, -74.50], 9);
 
 		map.on('click', function(e) {
-			openInJosm();
+			getWayID(e);
 		});
 
-		function getJOSMUrl() {
+		function getJOSMUrl(e) {
 			var bounds = map.getBounds();
 			var sw = bounds.getSouthWest();
 			var ne = bounds.getNorthEast();
 			return "http://127.0.0.1:8111/load_and_zoom?new_layer=true&left=" + sw.lng + "&right=" + ne.lng + "&top=" + ne.lat + "&bottom=" + sw.lat
 		}
 
+		function getWayID(e) {
+			var surfaceUrl = "https://api.tiles.mapbox.com/v4/surface/planemad.0fab1118.json?layer=unconnected_major&fields=way_id&access_token=pk.eyJ1IjoicGxhbmVtYWQiLCJhIjoiemdYSVVLRSJ9.g3lbg_eN0kztmsfIPxa9MQ&points=" + e.latlng.lng + "," + e.latlng.lat;
+
+			$.ajax({
+				async: false,
+				url: surfaceUrl,
+				complete: function(d) {
+					var way_id = d.responseJSON.results[0].way_id;
+					openInJosm(way_id);
+				}
+			});
+		}
+
 		// Open the selected feature in JOSM using a faux AJAX call
-		function openInJosm() {
-			var JOSMurl = getJOSMUrl();
+		function openInJosm(way_id) {
+			if (way_id) {
+				var JOSMurl = "http://127.0.0.1:8111/load_object?new_layer=true&objects=w" + way_id;
+			} else {
+				var JOSMurl = getJOSMUrl();
+			}
 			// Use the .ajax JQ method to load the JOSM link unobtrusively and alert when the JOSM plugin is not running.
 			$.ajax({
 				url: JOSMurl,
@@ -47,4 +64,3 @@
 	</script>
 </body>
 </html>
-
