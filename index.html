@@ -33,22 +33,22 @@
 		}
 
 		function getWayID(e) {
-			var surfaceUrl = "https://api.tiles.mapbox.com/v4/surface/planemad.0fab1118.json?layer=unconnected_major&fields=way_id&access_token=pk.eyJ1IjoicGxhbmVtYWQiLCJhIjoiemdYSVVLRSJ9.g3lbg_eN0kztmsfIPxa9MQ&points=" + e.latlng.lng + "," + e.latlng.lat;
+			var surfaceUrl = "https://api.tiles.mapbox.com/v4/surface/planemad.0fab1118.json?layer=unconnected_major&fields=node_id&access_token=pk.eyJ1IjoicGxhbmVtYWQiLCJhIjoiemdYSVVLRSJ9.g3lbg_eN0kztmsfIPxa9MQ&points=" + e.latlng.lng + "," + e.latlng.lat;
 
 			$.ajax({
 				async: false,
 				url: surfaceUrl,
 				complete: function(d) {
-					var way_id = d.responseJSON.results[0].way_id;
-					openInJosm(way_id);
+					var node_id = d.responseJSON.results[0].node_id;
+					openInJosm(node_id);
 				}
 			});
 		}
 
 		// Open the selected feature in JOSM using a faux AJAX call
-		function openInJosm(way_id) {
-			if (way_id) {
-				var JOSMurl = "http://127.0.0.1:8111/load_object?new_layer=true&objects=n" + way_id;
+		function openInJosm(node_id) {
+			if (node_id) {
+				var JOSMurl = "http://127.0.0.1:8111/load_object?new_layer=true&objects=n" + node_id;
 			} else {
 				var JOSMurl = getJOSMUrl();
 			}
