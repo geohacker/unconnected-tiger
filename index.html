@@ -33,6 +33,10 @@
 			getWayID(e);
 		});
 
+		mouse.bind('`', function(e) {
+			map.setView(mouseLocation, 6);
+		});
+
 		mouse.bind('1', function(e) {
 			map.setView(mouseLocation, 10);
 		});
